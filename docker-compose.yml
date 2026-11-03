@@ -1,0 +1,61 @@
+name: gisa-openwebui
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: owui
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: openwebui
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U owui -d openwebui"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.12.5}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:8080"
+    volumes:
+      - openwebui-data:/app/backend/data
+    environment:
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
+
+      # LLM
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_OPENAI_API: "true"
+      OPENAI_API_BASE_URL: https://ai-platform.gisa.de
+      OPENAI_API_KEY: ${GISA_API_KEY}
+      OPENAI_API_CONFIGS: '{"0": {"enable": true, "model_ids": ["${GISA_CHAT_MODEL:-DeepSeek-V4-Flash-0731}"]}}'
+      DEFAULT_MODELS: ${GISA_CHAT_MODEL:-DeepSeek-V4-Flash-0731}
+
+      # DB + Vectors
+      DATABASE_URL: postgresql://owui:${POSTGRES_PASSWORD}@postgres:5432/openwebui
+      VECTOR_DB: pgvector
+      PGVECTOR_DB_URL: postgresql://owui:${POSTGRES_PASSWORD}@postgres:5432/openwebui
+      PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH: ${EMBEDDING_DIMENSIONS:-2560}
+      PGVECTOR_USE_HALFVEC: "true"
+      PGVECTOR_INDEX_METHOD: hnsw
+
+      # RAG / Embeddings
+      RAG_EMBEDDING_ENGINE: openai
+      RAG_OPENAI_API_BASE_URL: "https://ai-platform.gisa.de"
+      RAG_OPENAI_API_KEY: ${GISA_API_KEY}
+      RAG_EMBEDDING_MODEL: ${GISA_EMBEDDING_MODEL:-qwen3-embedding-4b}
+      RAG_EMBEDDING_BATCH_SIZE: "16"
+      CHUNK_SIZE: "1000"
+      CHUNK_OVERLAP: "200"
+      RAG_TOP_K: "15"
+      ENABLE_RAG_HYBRID_SEARCH: "true"
+
+volumes:
+  pgdata:
+  openwebui-data:
