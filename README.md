@@ -3,7 +3,7 @@
 ## Voraussetzungen
 
 - Docker Desktop 4.52.0+ (oder Docker Engine mit Compose v2)
-- `openssl` zum generieren der Secrets
+- `openssl` zum Generieren der Secrets
 - `curl`, `python3` für das Skript zum testen der API verbindung (optional)
 - *Windows*: `Git Bash` (hat `curl` und `openssl` vorinstalliert und kann Bash-Skripte ausführen, ggf. Python nachinstallieren)
 
@@ -39,7 +39,7 @@ docker compose up -d
 ## Einrichtung
 
 - Open WebUI unter http://localhost:3000 öffnen
-- Mit beliebiger E-Mail-Adresse und Passwort registrieren (Erster Registrierter Nutzer wird Admin)
+- Mit beliebiger E-Mail-Adresse und Passwort registrieren (Erster registrierter Nutzer wird Admin)
 - Deepseek Model sollte direkt im Chat verfügbar sein
 
 ### Wissensbasis anlegen
