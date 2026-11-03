@@ -48,17 +48,13 @@ docker compose up -d
   - Woran arbeiten Sie?: Beliebigen Namen eintragen
   - Was möchten Sie erreichen?: Beliebige Beschreibung eintragen
 - *Wissen erstellen*
-- *+* wählen > PDF-Dateien hochladen
+- `+` wählen > PDF-Dateien hochladen
 - Die Wissensbasis kann dann über Eingeben von `#` referenziert und in die Anfrage mit einbezogen werden
 
 ### Wissensbasis direkt in Anfragen inkludieren (optional)
 
-Oben Links *Arbeitsbereich* > *Modelle* > *Erstellen* 
-
-Modellname: Beliebig, z.B. "GISA Chatbot"
-
-Basismodell: DeepSeek-V4-Flash-0731
-
-Systemprompt: "Du bist Experte für die Marktkommunikation Strom. Antworte auf Deutsch. Nenne einen Nachrichtentyp oder Prüfidentifikator nur, wenn die Quelle ihn ausdrücklich für diesen Use-Case nennt, sonst sag, dass die Quelle es offen lässt. Berücksichtige alle Marktrollen (NB, LF, MSB). Gib keine Zwischenschritte aus."
-
-Wissen: Gerade erstellte Wissensbasis auswählen
+- Oben Links *Arbeitsbereich* > *Modelle* > *Erstellen* 
+- Modellname: Beliebig, z.B. "GISA Chatbot"
+- Basismodell: DeepSeek-V4-Flash-0731
+- Systemprompt: "Du bist Experte für die Marktkommunikation Strom. Antworte auf Deutsch. Nenne einen Nachrichtentyp oder Prüfidentifikator nur, wenn die Quelle ihn ausdrücklich für diesen Use-Case nennt, sonst sag, dass die Quelle es offen lässt. Berücksichtige alle Marktrollen (NB, LF, MSB). Gib keine Zwischenschritte aus."
+- Wissen: Gerade erstellte Wissensbasis auswählen
