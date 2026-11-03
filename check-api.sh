@@ -15,13 +15,13 @@ echo "HTTP $code"; [ "$code" = 200 ] && python3 -c 'import json;d=json.load(open
 
 echo; echo "== POST $BASE/chat/completions ($CHAT)"
 curl -s -H "$AUTH" -H "Content-Type: application/json" "$BASE/chat/completions" \
-  -d "{\"model\":\"$CHAT\",\"messages\":[{\"role\":\"user\",\"content\":\"Sag nur: OK\"}],\"max_tokens\":20}" \
-  | python3 -c 'import sys,json;d=json.load(sys.stdin);print("Antwort:",d["choices"][0]["message"]["content"])' \
+  -d "{\"model\":\"$CHAT\",\"messages\":[{\"role\":\"user\",\"content\":\"Only say: OK\"}],\"max_tokens\":20}" \
+  | python3 -c 'import sys,json;d=json.load(sys.stdin);print("Answer:",d["choices"][0]["message"]["content"])' \
   || echo "Chat failed"
 
 echo; echo "== POST $BASE/embeddings ($EMB)"
 curl -s -H "$AUTH" -H "Content-Type: application/json" "$BASE/embeddings" \
   -d "{\"model\":\"$EMB\",\"input\":[\"Test eins\",\"Test zwei\"]}" \
-  | python3 -c 'import sys,json;d=json.load(sys.stdin);v=d["data"];print("Vectors:",len(v),"| Dimension:",len(v[0]["embedding"]))' \
+  | python3 -c 'import sys,json;d=json.load(sys.stdin);v=d["data"];print("Dimensions:",len(v[0]["embedding"]))' \
   || echo "Embeddings failed (or Batch-Input not supported)"
 echo; echo "Dimensions should be ${EMBEDDING_DIMENSIONS:-2560}."
